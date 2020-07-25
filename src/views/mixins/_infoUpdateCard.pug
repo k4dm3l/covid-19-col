@@ -1,0 +1,17 @@
+mixin infoUpdateCard()
+  .card.mt-2(style={width: '100%'})
+    .card-header
+      h5 General Info
+    ul.list-group.list-group-flush
+      li.list-group-item
+        .row
+          .col-4(style={'font-size': '0.7rem'}) Cases:
+          .col-4(style={'font-size': '0.7rem'})=data.numberCases
+      li.list-group-item
+        .row
+          .col-4(style={'font-size': '0.7rem'}) Updated:
+          .col-4(style={'font-size': '0.7rem'})=data.lastUpdate[0].updatedAt
+
+  script.
+    var dataEndpointIG = !{JSON.stringify(data)}
+    console.log(dataEndpointIG)

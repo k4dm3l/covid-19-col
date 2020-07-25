@@ -9,7 +9,7 @@ const CaseSchema = new Schema({
   ciudad_de_ubicaci_n: String,
   departamento: String,
   atenci_n: String,
-  edad: String,
+  edad: Number,
   sexo: String,
   tipo: String,
   estado: String,
@@ -22,6 +22,8 @@ const CaseSchema = new Schema({
   codigo_departamento: String,
   codigo_pais: String,
   pertenencia_etnica: String
+}, {
+  timestamps: true
 });
 
 module.exports = model('Cases', CaseSchema);

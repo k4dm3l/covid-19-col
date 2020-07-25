@@ -1,0 +1,16 @@
+mixin top5CitiesCard()
+  .card(style={width: '100%'})
+    .card-header
+      h5 Top Five Locations
+    ul.list-group.list-group-flush
+      li.list-group-item
+        .row
+          .col-1(style={'font-size': '0.7rem'}) #
+          .col-6(style={'font-size': '0.7rem'}) State
+          .col-3(style={'font-size': '0.7rem'}) Cases
+      each d, index in data.departments
+        li.list-group-item
+          .row
+            .col-1(style={'font-size': '0.7rem'})=index+1
+            .col-6(style={'font-size': '0.8rem'})=d.department
+            .col-3(style={'font-size': '0.8rem'})=d.count

@@ -6,6 +6,7 @@ const helmet = require('helmet');
 const compression = require('compression');
 const morgan = require('morgan');
 const cors = require('cors');
+const path = require('path');
 
 /** File Requirements */
 const config = require('./config/config');
@@ -16,6 +17,13 @@ const mainRouter = require('./router');
 
 /** Inits */
 const server = express();
+
+/** View Engine */
+server.set('views', path.join(__dirname, 'views'));
+server.set('view engine', 'pug');
+
+/** Static public files */
+server.use(express.static(path.join(__dirname, 'public')));
 
 /** Middlewares */
 server.use(morgan('dev'));

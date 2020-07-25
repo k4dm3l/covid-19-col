@@ -1,0 +1,47 @@
+mixin typeRecoveryCard()
+  .card(style={width: '100%'})
+    .card-header
+      h5 Recovery Types
+    canvas#chartRecoveryTypes.mt-3.p-2
+    .card-body
+      p.card-text Comparative between recovery types
+  
+  script.
+    var ctxRT = document.getElementById('chartRecoveryTypes').getContext('2d');
+
+    var colorsRT = [];
+    var labelsDataRT = [];
+    var dataSetRT = [];
+
+    var dataEndpointRT = !{JSON.stringify(data.recoveryTypes)}
+
+    dataEndpointRT.forEach(d => {
+      if (!d.recovery) {
+        labelsDataRT.push('No Recover');
+        dataSetRT.push(d.count);
+        colorsRT.push('#ff4040');
+      } else {
+        if (d.recovery === 'Tiempo') {
+          labelsDataRT.push('Time');
+          dataSetRT.push(d.count);
+          colorsRT.push('#40ff63');
+        } else {
+          labelsDataRT.push('PCR');
+          dataSetRT.push(d.count);
+          colorsRT.push('#40a8ff');
+        }
+      }
+    });
+
+    var chartRT = new Chart(ctxRT, {
+      type: 'bar',
+      data: {
+        labels: labelsDataRT,
+        datasets: [{
+          label: 'Recovery Types',
+          data: dataSetRT,
+          backgroundColor: colorsRT
+        }]
+      },
+      options: {}
+    });

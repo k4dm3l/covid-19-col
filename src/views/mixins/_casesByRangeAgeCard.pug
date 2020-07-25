@@ -1,0 +1,42 @@
+mixin casesByRangeAgeCard()
+  .card(style={'max-width': '100%'})
+    .card-header
+      h5 Cases by Range Ages
+    canvas#chartByRangeAge.mt-3
+    .card-body
+      p.card-text Quantities for each range ages
+  
+  script.
+    var ctxRA = document.getElementById('chartByRangeAge').getContext('2d');
+
+    var colorsRA = [
+      '#ffac40',
+      '#a5ff40',
+      '#4088ff',
+      '#b140ff',
+      '#ff4074',
+      '#fe230d',
+      '#fe0db9'
+    ];
+
+    var labelsDataRA = [];
+    var dataSetRA =[];
+
+    var dataEndpointRA = !{JSON.stringify(data.casesByRangeAge)}
+
+    dataEndpointRA.forEach(d => {
+      labelsDataRA.push(d._id);
+      dataSetRA.push(d.count);
+    });
+
+    var chartRA = new Chart(ctxRA, {
+      type: 'polarArea',
+      data: {
+        labels: labelsDataRA,
+        datasets: [{
+          label: 'Test',
+          data: dataSetRA,
+          backgroundColor: colorsRA
+        }]
+      }
+    });

@@ -1,0 +1,53 @@
+mixin maleFemaleCard()
+  .card(style={width: '100%'})
+    .card-header
+      h5 Female - Male comparative
+    canvas#chartMaleFemale.mt-3
+    .card-body
+      p.card-text Comparative between gender COVID-19 affected
+
+  script.
+    var ctxFvsM = document.getElementById('chartMaleFemale').getContext('2d');
+    var colorsFvsM = [];
+
+    var labelsDataFvsM = [];
+    var dataSetFvsM = [];
+
+    var dataEndpointFM = !{JSON.stringify(data.sex)}
+
+    dataEndpointFM.forEach(d => {
+      if (d.sex === 'M') {
+        labelsDataFvsM.push('Male');
+        dataSetFvsM.push(d.count);
+        colorsFvsM.push('#33a8ff');
+      } else {
+        if (d.sex === 'F') {
+          labelsDataFvsM.push('Female');
+          dataSetFvsM.push(d.count);
+          colorsFvsM.push('#f3ff33')
+        }
+      }
+    });
+
+    var chartFvsM = new Chart(ctxFvsM, {
+      type: 'pie',
+      data: {
+        labels: labelsDataFvsM,
+        datasets: [{
+          label: 'MvsF',
+          backgroundColor: colorsFvsM.slice(0,2),
+          borderWidth: 0,
+          data: dataSetFvsM
+        }]
+      },
+      options: {
+        cutoutPercentage: 85, 
+        legend: {
+          position: 'bottom', 
+          labels:{
+            pointStyle: 'circle',
+            usePointStyle: true
+          }
+        }
+      }
+    });

@@ -1,0 +1,42 @@
+mixin casesByStatusCard()
+  .card(style={'max-width': '100%'})
+    .card-header
+      h5 Cases by Status
+    canvas#chartStatusCases.mt-3
+    .card-body
+      p.card-text Quantities by status
+  
+  script.
+    var ctxSC = document.getElementById('chartStatusCases').getContext('2d');
+
+    var colorsSC = [
+      '#ffac40',
+      '#a5ff40',
+      '#4088ff',
+      '#b140ff',
+      '#ff4074',
+      '#fe230d'
+    ];
+
+    var labelsDataSC = [];
+    var dataSetSC =[];
+
+    var dataEndpointSC = !{JSON.stringify(data.casesByStatus)}
+
+    dataEndpointSC.forEach(d => {
+      labelsDataSC.push(d.status);
+      dataSetSC.push(d.count);
+    });
+
+    var chartSC = new Chart(ctxSC, {
+      type: 'bar',
+      data: {
+        labels: labelsDataSC,
+        datasets: [{
+          label: 'Status Case',
+          data: dataSetSC,
+          backgroundColor: colorsSC
+        }]
+      },
+      options: {}
+    });

@@ -12,6 +12,7 @@ const getINSCovidData = async (req, res) => {
 
   for(let reg = 0; reg < result.data.length; reg += 100) {
     const dbQueries = result.data.slice(reg, reg + 100).map(data => {
+      data.edad = Number(data.edad);
       return caseModel.findOneAndUpdate(
         { id_de_caso: data.id_de_caso },
         { $set: data },

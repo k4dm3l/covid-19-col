@@ -1,0 +1,29 @@
+extends layout
+
+include mixins/_top5CitiesCard
+include mixins/_maleFemaleCard
+include mixins/_typeRecoveryCard
+include mixins/_casesByRangeAgeCard
+include mixins/_casesByStatusCard
+include mixins/_casesByAtentionCard
+include mixins/_infoUpdateCard
+
+block content
+  .container-fluid
+    .row.mt-5
+      .col-8.mt-1
+        .row
+          .col-6
+            +top5CitiesCard()
+          .col-6
+            +maleFemaleCard()
+        .row.mt-2
+          .col-6
+            +typeRecoveryCard()
+          .col-6
+            +casesByAtentionCard()
+      .col-4.mt-1
+        +casesByStatusCard()
+        +infoUpdateCard()
+    .col-12.mt-2
+      +casesByRangeAgeCard()

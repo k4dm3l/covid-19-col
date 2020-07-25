@@ -1,0 +1,42 @@
+mixin casesByAtentionCard()
+  .card(style={width: '100%'})
+    .card-header
+      h5 Recovery Types
+    canvas#chartCasesByAtention.mt-3.p-2
+    .card-body
+      p.card-text Comparative between atention types
+
+  script.
+    var ctxCBA = document.getElementById('chartCasesByAtention').getContext('2d');
+
+    var colorsCBA = [
+      '#ffac40',
+      '#a5ff40',
+      '#4088ff',
+      '#b140ff',
+      '#ff4074',
+      '#fe230d',
+      '#fe0db9'
+    ];
+
+    var labelsDataCBA = [];
+    var dataSetCBA = [];
+
+    var dataEndpointCBA = !{JSON.stringify(data.casesByAtention)}
+
+    dataEndpointCBA.forEach(d => {
+      labelsDataCBA.push(d.atention);
+      dataSetCBA.push(d.count);
+    });
+
+    var chartCBA = new Chart(ctxCBA, {
+      type: 'pie',
+      data: {
+        labels: labelsDataCBA,
+        datasets: [{
+          label: 'Test',
+          data: dataSetCBA,
+          backgroundColor: colorsCBA
+        }]
+      }
+    });
