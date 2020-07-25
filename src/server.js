@@ -11,7 +11,7 @@ const cors = require('cors');
 const config = require('./config/config');
 const { corsValidations } = require('./config/corsConfig');
 const { databaseConnection } = require('./config/database');
-const { notFound, errorHandler, handlerFatalError } = require('./utils/middlewares/errorHandlers');
+const { notFound, errorHandler, handlerFatalError, wrapErrors, logErrors } = require('./utils/middlewares/errorHandlers');
 const mainRouter = require('./router');
 
 /** Inits */
@@ -30,6 +30,9 @@ server.use('/api', mainRouter);
 
 /** Error Handlers */
 server.use(notFound);
+
+server.use(logErrors);
+server.use(wrapErrors);
 server.use(errorHandler);
 
 /** Functions */

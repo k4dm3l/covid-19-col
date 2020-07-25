@@ -1,20 +1,24 @@
 'use strict'
 
+const boom = require('@hapi/boom');
+
 const notFound = (req, res, next) => {
-  const err = new Error('Resource not found');
-  err.status = 404;
+  const { output: { statusCode, payload } } = boom.notFound();
+  res.status(statusCode).json(payload);
+};
+
+const logErrors = (err, req, res, next) => {
+  process.stdout.write(err.message);
   next(err);
 };
 
+const wrapErrors = (err, req, res, next) => {
+  !err.isBoom ? next(boom.badImplementation(err)) : next(err);
+};
+
 const errorHandler = (err, req, res, next) => {
-  err.stack = err.stack || '';
-
-  const errorDetails = {
-    message: err.message,
-    status: err.status ? err.status : 500
-  };
-
-  res.status(err.status).json(errorDetails);
+  const { output: { statusCode, payload } } = err;
+  res.status(statusCode).json(payload);
 };
 
 const handlerFatalError = (err) => {
@@ -25,5 +29,7 @@ const handlerFatalError = (err) => {
 module.exports = {
   notFound,
   errorHandler,
-  handlerFatalError
+  handlerFatalError,
+  logErrors,
+  wrapErrors
 };
